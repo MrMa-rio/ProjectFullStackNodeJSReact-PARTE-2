@@ -4,7 +4,7 @@ export const ShoppingCart = () => {
   return (
     <>
       <button
-        title="Entrar"
+        title="Carrinho"
         className="hover:bg-opacity-20 active:bg-opacity-30 hover:bg-white p-2 rounded-2xl w-fit h-fit relative"
       >
         <CartIcon className="w-8 h-8 stroke-white"  />

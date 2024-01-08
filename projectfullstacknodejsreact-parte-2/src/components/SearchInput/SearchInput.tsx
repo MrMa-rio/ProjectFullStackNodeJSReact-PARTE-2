@@ -11,6 +11,7 @@ export const SearchInput = () => {
           id="search"
           placeholder="Busque um item"
           className="outline-none bg-black bg-opacity-0 w-64"
+          title="Pesquisar"
         />
       </div>
     </>
