@@ -1,6 +1,14 @@
+"use client"
 import { ListOfItems, Pagination, SearchInput } from "@/components";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { getLocalStorageAuth } = useLocalStorage("token", []);
+  useEffect(() => {
+    if (getLocalStorageAuth()) return console.log("Autenticado!!");
+    return console.log("Nao Autenticado!!")
+  }, []);
   return (
     <div className="w-full h-screen flex flex-col">
       <div className="flex justify-center items-center w-full h-32">

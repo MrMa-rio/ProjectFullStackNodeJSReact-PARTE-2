@@ -21,6 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <QueryClientProvider client={client}>
           <PrimeReactProvider>
             <body className={saira.className}>
+              <Header />
               {children}
             </body>
           </PrimeReactProvider>
