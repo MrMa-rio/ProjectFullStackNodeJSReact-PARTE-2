@@ -1,10 +1,16 @@
 import { ShoppingCart as CartIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const ShoppingCart = () => {
+  const router = useRouter()
+  const navigation = () => {
+    router.push("/site/carrinho")
+  }
   return (
     <>
       <button
         title="Carrinho"
+        onClick={navigation}
         className="hover:bg-opacity-20 active:bg-opacity-30 hover:bg-white p-2 rounded-2xl w-fit h-fit relative"
       >
         <CartIcon className="w-8 h-8 stroke-white"  />

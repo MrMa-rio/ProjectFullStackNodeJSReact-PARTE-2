@@ -1,7 +1,7 @@
 import { ShoppingCart } from "./components/ShoppingCart/ShoppingCart";
 import { Logout } from "./components/Logout/Logout";
 
-export const Header = () => {
+export const HeaderClient = () => {
   return (
     <div className="h-20 z-50">
       <div className="flex justify-between items-center bg-orange-400 w-full fixed h-20 p-4 shadow-lg">

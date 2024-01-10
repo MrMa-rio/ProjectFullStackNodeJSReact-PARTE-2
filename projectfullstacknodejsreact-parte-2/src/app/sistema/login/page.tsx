@@ -4,7 +4,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import image from "../../../Carne Bisteca c-Salada.jpg";
+import image from "../../../../Carne Bisteca c-Salada.jpg";
 import Image from "next/image";
 import { LockKeyhole, User2 } from "lucide-react";
 
@@ -18,7 +18,7 @@ export default function Login() {
   );
   const login = useMutation({
     mutationKey: ["token"],
-    mutationFn: async () => await authLogin(1, { email: email, senha: senha }),
+    mutationFn: async () => await authLogin(0, { email: email, senha: senha }),
   });
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function Login() {
   useEffect(() => {
     if (login?.data?.status == 200) {
       setLocalStorageAuth({ token: login.data.token });
-      router.push("/site");
+      router.push("/sistema");
     }
   }, [login.data]);
 
@@ -44,8 +44,8 @@ export default function Login() {
         </div>
 
         <div className="flex flex-col justify-center items-center gap-8 bg-orange-300 w-full md:w-96 h-96 bg-opacity-30 rounded-2xl  ">
-          <h2 className="text-4xl text-white">Meu Restaurante</h2>
-          <h2 className="text-4xl text-white">Área do Cliente</h2>
+        <h2 className="text-4xl text-white">Meu Restaurante</h2>
+        <h2 className="text-4xl text-white">Área do Usuário</h2>
           <div className="flex flex-col justify-center items-center gap-4 text-white z-50">
             <div className="flex gap-2 justify-center items-center">
               <User2 />
@@ -62,15 +62,15 @@ export default function Login() {
                 type="password"
                 placeholder="Digite sua senha"
                 onChange={(e) => setSenha(e.currentTarget.value)}
-                onKeyDown={(e) => e.key=="Enter" && login.mutate()}
+                onKeyDown={(e) => e.key == "Enter" && login.mutate()}
                 className="bg-orange-600 rounded-md w-64 h-10 bg-opacity-50 outline-none p-3 placeholder-white"
               />
             </div>
             <div>
               <button
-                  className="w-72 h-10 hover:bg-orange-300 hover:bg-opacity-50 rounded-md transition-all "
-                  onClick={() => login.mutate()}
-                
+                className="w-72 h-10 hover:bg-orange-300 hover:bg-opacity-50 rounded-md transition-all "
+                onClick={() => login.mutate()}
+
               >
                 Logar
               </button>
@@ -100,7 +100,9 @@ export default function Login() {
             <h2 className="text-4xl text-white text-center z-50">
               Bem-vindo ao mundo da Comida!
             </h2>
-            <h2 className="text-4xl text-white text-center z-50">Área do Cliente</h2>
+            <h2 className="text-4xl text-white text-center z-50">
+              Área do Usuário
+            </h2>
             <div className="flex flex-col justify-center items-center gap-4 text-white z-50">
               <div className="flex gap-2 justify-center items-center">
                 <User2 />

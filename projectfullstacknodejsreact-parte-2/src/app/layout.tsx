@@ -2,7 +2,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode } from "react";
-import { Header } from "@/components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MainContextProvider } from "@/contexts/MainContext";
 import { saira } from "@/utils/ChangeFont";

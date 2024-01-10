@@ -1,9 +1,9 @@
 export interface ResponseAuthBody {
-  nome: string;
+  email: string;
   senha: string;
 }
 
 export const ResponseAuthBody: ResponseAuthBody = {
-  nome: "",
+  email: "",
   senha: "",
 };
