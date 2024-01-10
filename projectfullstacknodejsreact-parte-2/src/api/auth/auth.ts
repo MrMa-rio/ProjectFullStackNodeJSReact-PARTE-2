@@ -1,7 +1,6 @@
 import { ToggleLogin } from "@/typesObjects";
 import { ResponseAuthBody } from "@/typesObjects/ResponseAuthBody";
 import { ResponseAuthType } from "@/typesObjects/ResponseAuthType";
-import { ResponseStatus } from "@/typesObjects/ResponseStatus";
 import { headers } from "@/utils/HeaderApi";
 
 const url_usuario = process.env.NEXT_PUBLIC_API_URL_AUTH_USUARIO as string;
