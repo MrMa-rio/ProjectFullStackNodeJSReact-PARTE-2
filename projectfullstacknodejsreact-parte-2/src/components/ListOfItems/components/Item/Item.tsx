@@ -1,7 +1,6 @@
 import Image from "next/image";
-import image from "../../../../../../temp/image.jpg";
 import { ItemProps } from "@/typesObjects/ItemProps";
-import { useEffect } from "react";
+import { PlusCircle } from "lucide-react";
 
 export const Item = ({
   idItem,
@@ -11,15 +10,25 @@ export const Item = ({
 }: ItemProps) => {
   return (
     <>
-      <div className="flex justify-center items-center gap-2 w-full h-44 hover:bg-opacity-25 hover:bg-black hover:scale-110 transition-all duration-150 rounded-xl">
+      <div className="flex justify-center items-center gap-2 w-full h-44 p-2 hover:bg-opacity-25 hover:bg-orange-600 rounded-xl transition-all active:bg-opacity-15 ">
         <div className="w-[40%] min-w-32 max-w-48 rounded-lg overflow-hidden">
-          <Image unoptimized={true} width={100} height={100} src={imagem_64} alt="" />
+          <Image
+            loading="lazy"
+            width={300}
+            height={300}
+            src={imagem_64}
+            title={nome}
+            alt=""
+            className="bg-cover w-64 h-32"
+          />
         </div>
-        <div>
-          <p>{nome}</p>
-          <p>Texto Medio Paaa</p>
-          <p>Outro Texto</p>
-          <p>aaa</p>
+        <div className="flex flex-col gap-2 w-full p-1">
+          <p className="text-lg overflow-x-hidden">{nome}</p>
+          <p className="text-lg">R${preco_unitario}</p>
+          <div className="flex justify-center items-center gap-2 w-[80%] border-2 border-orange-500 px-2 rounded-md active:scale-105 transition-all duration-150">
+            <PlusCircle />
+            <button className="text-lg w-full">Adicionar</button>
+          </div>
         </div>
       </div>
     </>

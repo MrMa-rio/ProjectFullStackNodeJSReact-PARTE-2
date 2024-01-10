@@ -4,9 +4,9 @@ import "./globals.css";
 import { ReactNode } from "react";
 import { Header } from "@/components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MainContextProvider } from "@/Contexts/mainContext";
 import { saira } from "@/utils/ChangeFont";
 import { PrimeReactProvider } from "primereact/api";
+import { MainContextProvider, SearchContextProvider } from "@/contexts";
 
 const client = new QueryClient()
 const metadata: Metadata = {
@@ -16,16 +16,20 @@ const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-br">
+    <html lang="pt-br" >
       {<MainContextProvider>
-        <QueryClientProvider client={client}>
-          <PrimeReactProvider>
-            <body className={saira.className}>
-              <Header />
-              {children}
-            </body>
-          </PrimeReactProvider>
-        </QueryClientProvider>
+
+        <SearchContextProvider>
+          <QueryClientProvider client={client}>
+            <PrimeReactProvider>
+              <body className={saira.className}>
+                <Header />
+                {children}
+              </body>
+            </PrimeReactProvider>
+          </QueryClientProvider>
+        </SearchContextProvider>
+
       </MainContextProvider>}
     </html>
   );

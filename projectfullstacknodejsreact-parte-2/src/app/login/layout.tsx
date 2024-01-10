@@ -1,11 +1,10 @@
 'use client'
 import '../globals.css'
-import type { Metadata } from 'next'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { PrimeReactProvider } from "primereact/api";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme
 import { ReactNode } from 'react';
-import { MainContextProvider } from '@/Contexts/mainContext';
+import { MainContextProvider } from '@/contexts';
 import { saira } from '@/utils/ChangeFont';
 
 
