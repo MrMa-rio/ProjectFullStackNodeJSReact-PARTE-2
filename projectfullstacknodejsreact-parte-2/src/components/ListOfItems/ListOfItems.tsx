@@ -1,10 +1,13 @@
 import { useItems } from "@/hooks/useItems";
 import { Item } from "./components/Item/Item";
 import { useSearchContext } from "@/hooks/useSearchContext";
+import { XCircle } from "lucide-react";
+import { useState } from "react";
 
 export const ListOfItems = () => {
   const { data, Loading, Error } = useItems();
   const { search } = useSearchContext();
+  const [isShow, setIsShow] = useState(false)
   return (
     <>
       <div className="w-full xl:w-[80%] h-fit flex justify-center items-center">
@@ -34,6 +37,8 @@ export const ListOfItems = () => {
                         imagem_64={i.imagem_64}
                         nome={i.nome}
                         preco_unitario={i.preco_unitario}
+                        isShow={isShow}
+                        setIsShow={setIsShow}
                         key={index}
                       />
                     )}
@@ -43,6 +48,8 @@ export const ListOfItems = () => {
                       imagem_64={i.imagem_64}
                       nome={i.nome}
                       preco_unitario={i.preco_unitario}
+                      isShow={isShow}
+                      setIsShow={setIsShow}
                       key={index}
                     />
                   )}
@@ -51,6 +58,15 @@ export const ListOfItems = () => {
             })}
           </div>
         )}
+        { isShow && <div className="flex justify-center items-center fixed top-20 left-0 w-screen h-screen bg-black bg-opacity-70">
+          <div className="flex w-[70%] h-[70%] bg-white p-2">
+            <div className="flex justify-end w-full bg-orange-300 ">
+              <button onClick={() => setIsShow(false)} className="w-fit h-fit">
+                <XCircle />
+              </button>
+            </div>
+          </div>
+        </div>}
       </div>
     </>
   );

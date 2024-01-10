@@ -3,15 +3,23 @@ import image404 from "@/assets/not-found-image.jpg"
 import { ItemProps } from "@/typesObjects/ItemProps";
 import { PlusCircle } from "lucide-react";
 
+interface ItemProps2 extends ItemProps {
+  isShow: boolean
+  setIsShow: (value:boolean)=> void
+}
+
 export const Item = ({
   idItem,
   imagem_64,
   nome,
   preco_unitario,
-}: ItemProps) => {
+  setIsShow,
+  isShow
+
+}: ItemProps2) => {
   return (
     <>
-      <div className="flex justify-center items-center gap-2 w-full h-44 p-2 hover:bg-opacity-25 hover:bg-orange-600 rounded-xl transition-all active:bg-opacity-15 ">
+      <div onClick={() => setIsShow(!isShow)} className="flex justify-center items-center gap-2 w-full h-44 p-2 hover:bg-opacity-25 hover:bg-orange-600 rounded-xl transition-all active:bg-opacity-15 ">
         <div className="w-[40%] min-w-32 max-w-48 rounded-lg overflow-hidden">
           <img
             loading="lazy"
