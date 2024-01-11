@@ -4,10 +4,12 @@ import { ItemProps } from "@/typesObjects/ItemProps";
 import { PlusCircle } from "lucide-react";
 import { useItemContext } from "@/hooks/useItemContext";
 import { useMainContext } from "@/hooks/useMainContext";
+import { useItem } from "@/hooks/useItem";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface ItemProps2 extends ItemProps {
   isShow: boolean
-  setIsShow: (value:boolean)=> void
+  setIsShow: (value: boolean) => void
 }
 
 export const Item = ({
@@ -20,13 +22,23 @@ export const Item = ({
 
 }: ItemProps2) => {
 
-  const {setItemID} = useItemContext()
-  const {setCountCart, countCart} = useMainContext()
-
+  //const {setItemID} = useItemContext()
+  const { setCountCart, countCart } = useMainContext()
+  const {setDataLS, getDataLS} = useLocalStorage("cart", [])
+  // const {data} = useItem(idItem)
   // const targetItem = () => {
   //   setIsShow(true)
   //   setItemID(idItem)
   // } era usado para abrir um popup do item
+  const eventClick = () => {
+    setDataLS({
+      idItem:idItem,
+      imagem_64:imagem_64,
+      nome:nome,
+      preco_unitario:preco_unitario,
+    })
+    setCountCart(getDataLS().length)
+  }
 
   return (
     <>
@@ -48,7 +60,7 @@ export const Item = ({
           {/* <span className="text-orange-400 hover:text-orange-500 cursor-pointer">Detalhes do Item</span> */}
           <div className="flex justify-center items-center gap-2 w-[80%] border-2 border-orange-500 px-2 rounded-md active:scale-105 transition-all duration-150">
             <PlusCircle />
-            <button onClick={() => setCountCart(countCart+1)} className="text-lg w-full">Adicionar</button>
+            <button onClick={() => eventClick() } className="text-lg w-full">Adicionar</button>
           </div>
         </div>
       </div>

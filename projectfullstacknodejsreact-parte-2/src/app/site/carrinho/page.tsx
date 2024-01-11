@@ -2,11 +2,23 @@
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ItemInCart } from "./components/ItemInCart/ItemInCart";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { ItemProps } from "@/typesObjects/ItemProps";
+import { useEffect, useState } from "react";
+import { useMainContext } from "@/hooks/useMainContext";
 export default function page() {
   const router = useRouter();
   const backRouter = () => {
     router.back();
   };
+  const { getDataLS } = useLocalStorage("cart", [])
+  const {countCart, setCountCart} = useMainContext()
+  const [arrayCart, setArrayCart] = useState(getDataLS())
+
+  useEffect(() => {
+    setArrayCart(getDataLS())
+    setCountCart(getDataLS().length)
+  },[countCart])
   return (
     <>
       <div className="flex flex-col justify-center items-center xl:px-10 pt-8 xl:pt-28 px-2">
@@ -23,18 +35,17 @@ export default function page() {
           <div className="flex flex-col gap-8 w-full h-full pt-8 p-4">
             <h2 className="text-2xl">ITEMS</h2>
             <div className="flex flex-col gap-2 h-[600px] overflow-y-scroll shadow-md xl:shadow-none rounded-2xl xl:rounded-none">
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
-              <ItemInCart />
+              {arrayCart?.length > 0 ? arrayCart?.map((item: ItemProps) => {
+                return (
+                  <ItemInCart
+                    idItem={item.idItem} 
+                    imagem_64={item.imagem_64} 
+                    nome={item.nome} 
+                    preco_unitario={item.preco_unitario} 
+                    qtdItem_={3}
+                  />
+                )
+              }) : <>Seu Carrinho está vazio</>}
             </div>
           </div>
           <div className="w-0.5 h-[90%] hidden xl:flex bg-gray-400 rounded-xl"></div>
