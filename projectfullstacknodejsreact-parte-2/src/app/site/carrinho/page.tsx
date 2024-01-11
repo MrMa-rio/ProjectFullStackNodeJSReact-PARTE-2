@@ -1,7 +1,7 @@
 "use client";
 import { ArrowLeft } from "lucide-react";
-import { ItemInCart } from "./components/ItemInCart/ItemInCart";
 import { useRouter } from "next/navigation";
+import { ItemInCart } from "./components/ItemInCart/ItemInCart";
 export default function page() {
   const router = useRouter();
   const backRouter = () => {
@@ -9,8 +9,8 @@ export default function page() {
   };
   return (
     <>
-      <div className="flex flex-col justify-center items-center px-10 pt-28">
-        <div className="w-[80%] h-fit py-2">
+      <div className="flex flex-col justify-center items-center xl:px-10 pt-8 xl:pt-28 px-2">
+        <div className="w-full md:w-[80%] h-fit py-2">
           <button
             onClick={backRouter}
             className="flex gap-2 border-2 p-1 border-orange-200 rounded-lg transition-all hover:bg-orange-200"
@@ -19,10 +19,10 @@ export default function page() {
             VOLTAR
           </button>
         </div>
-        <div className="flex flex-col xl:flex-row items-center w-[80%] xl:h-[70vh] border-2 border-orange-200 rounded-2xl">
+        <div className="flex flex-col xl:flex-row items-center xl:w-[80%] xl:h-[70vh] border-2 border-orange-200 rounded-2xl">
           <div className="flex flex-col gap-8 w-full h-full pt-8 p-4">
             <h2 className="text-2xl">ITEMS</h2>
-            <div className="flex flex-col gap-2 h-[600px] overflow-y-scroll shadow-2xl">
+            <div className="flex flex-col gap-2 h-[600px] overflow-y-scroll shadow-md xl:shadow-none rounded-2xl xl:rounded-none">
               <ItemInCart />
               <ItemInCart />
               <ItemInCart />
@@ -38,7 +38,7 @@ export default function page() {
             </div>
           </div>
           <div className="w-0.5 h-[90%] hidden xl:flex bg-gray-400 rounded-xl"></div>
-          <div className="flex flex-col w-1/2 h-full pt-8 p-4 gap-2">
+          <div className="flex flex-col w-full xl:w-1/2 h-full pt-8 p-4 gap-2">
             <h2 className="text-2xl">SUBTOTAL</h2>
             <div className="flex flex-col justify-center w-full h-[70%] py-6">
               <div className="flex justify-between">

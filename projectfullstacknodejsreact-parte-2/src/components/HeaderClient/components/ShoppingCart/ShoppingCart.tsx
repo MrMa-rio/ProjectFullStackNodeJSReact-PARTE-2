@@ -1,3 +1,4 @@
+import { useMainContext } from "@/hooks/useMainContext";
 import { ShoppingCart as CartIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -6,6 +7,7 @@ export const ShoppingCart = () => {
   const navigation = () => {
     router.push("/site/carrinho")
   }
+  const {countCart} = useMainContext()
   return (
     <>
       <button
@@ -15,7 +17,7 @@ export const ShoppingCart = () => {
       >
         <CartIcon className="w-8 h-8 stroke-white"  />
         <div className="flex justify-center items-center w-fit p-1 h-4 bg-red-700 rounded-full bottom-0 right-0 absolute">
-          <p className="text-xs text-white opacity-90">10</p>
+          <p className="text-xs text-white opacity-90">{countCart}</p>
         </div>
       </button>
     </>

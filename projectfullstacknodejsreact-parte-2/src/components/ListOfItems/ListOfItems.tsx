@@ -2,12 +2,17 @@ import { useItems } from "@/hooks/useItems";
 import { Item } from "./components/Item/Item";
 import { useSearchContext } from "@/hooks/useSearchContext";
 import { XCircle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ItemContextProvider } from "@/contexts";
+import { useItemContext } from "@/hooks/useItemContext";
+import { ModalItem } from "./components/ModalItem/ModalItem";
 
 export const ListOfItems = () => {
   const { data, Loading, Error } = useItems();
   const { search } = useSearchContext();
   const [isShow, setIsShow] = useState(false)
+  const {setItemID,  itemID} = useItemContext()
+
   return (
     <>
       <div className="w-full xl:w-[80%] h-fit flex justify-center items-center">
@@ -58,15 +63,7 @@ export const ListOfItems = () => {
             })}
           </div>
         )}
-        { isShow && <div className="flex justify-center items-center fixed top-20 left-0 w-screen h-screen bg-black bg-opacity-70">
-          <div className="flex w-[70%] h-[70%] bg-white p-2">
-            <div className="flex justify-end w-full bg-orange-300 ">
-              <button onClick={() => setIsShow(false)} className="w-fit h-fit">
-                <XCircle />
-              </button>
-            </div>
-          </div>
-        </div>}
+        { isShow && <ModalItem setIsShow={setIsShow} />}
       </div>
     </>
   );

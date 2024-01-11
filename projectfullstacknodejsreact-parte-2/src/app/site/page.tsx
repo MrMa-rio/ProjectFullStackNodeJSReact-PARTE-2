@@ -1,5 +1,6 @@
 "use client";
 import { ListOfItems, SearchInput } from "@/components";
+import { ItemContextProvider } from "@/contexts";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useEffect } from "react";
 
@@ -16,7 +17,9 @@ export default function Home() {
       </div>
       <div className="flex flex-col justify-center items-center h-fit p-4 gap-4 ">
         <h2 className="text-3xl">Cardapio do Dia</h2>
-        <ListOfItems />
+        <ItemContextProvider>
+          <ListOfItems />
+        </ItemContextProvider>
       </div>
     </div>
   );
