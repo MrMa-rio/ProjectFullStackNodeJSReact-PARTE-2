@@ -1,10 +1,10 @@
-import { getItems } from "@/api/items/getItems";
+import { getOrders } from "@/api/orders/getOrders";
 import { useQuery } from "@tanstack/react-query";
 
-export const useItems = () => {
+export const useOrders = () => {
   const { data, isLoading, isError, isFetching } = useQuery({
-    queryFn: () => getItems(),
-    queryKey: ["items"],
+    queryFn: () => getOrders(),
+    queryKey: ["orders"],
     refetchOnWindowFocus: true,
     staleTime: 30000,
   });

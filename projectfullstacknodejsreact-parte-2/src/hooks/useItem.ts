@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 export const useItem = (idItem: number) => {
   const { data, isLoading, isError, isFetching } = useQuery({
     queryFn: () => getItem(idItem),
-    queryKey: ["token"],
+    queryKey: ["item", idItem],
     refetchOnWindowFocus: true,
     staleTime: 30000,
   });

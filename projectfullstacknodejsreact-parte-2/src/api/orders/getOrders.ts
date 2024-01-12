@@ -1,10 +1,9 @@
-import { ItemProps } from "@/typesObjects/ItemProps";
 import { headers } from "@/utils/HeaderApi";
 
-const url = process.env.NEXT_PUBLIC_API_URL_ITENS as string;
+const url = process.env.NEXT_PUBLIC_API_PEDIDOS as string;
 
 
-export const getItems = async ()=> {
+export const getOrders = async ()=> {
   
   try {
     const response = await fetch(url, {
@@ -12,7 +11,7 @@ export const getItems = async ()=> {
       headers: headers(),
   });
     const results = await response.json();
-    const result: ItemProps[] = results;
+    const result: any = results;
     return result;
   } catch (err:any) {
   }

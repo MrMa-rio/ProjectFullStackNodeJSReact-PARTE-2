@@ -23,6 +23,7 @@ export default function page() {
   const {setSubTotal, subTotal} = useItemContext()
   const [arrayCart, setArrayCart] = useState(getDataLS());
   const [subTotais, setSubTotais ] = useState(0)
+  const taxService = 10
 
   const sumSubTotal = () => {
     const dataCart:ItemPropsCart[] = getDataLS()
@@ -95,7 +96,7 @@ export default function page() {
 
               <div className="flex justify-between">
                 <p>Taxa de Servico:</p>
-                <p>R$ 27,98</p>
+                <p>R$ {taxService.toFixed(2)}</p>
               </div>
             </div>
             <div className="w-full h-0.5 self-center bg-black rounded-xl"></div>
@@ -103,7 +104,7 @@ export default function page() {
             <div className="flex flex-col justify-center w-full">
               <div className="flex justify-between">
                 <p>Total:</p>
-                <p>R$ 27,98</p>
+                <p>R$ {subTotal+taxService}</p>
               </div>
             </div>
             <div className="flex flex-col justify-center w-full h-[70%] py-6">

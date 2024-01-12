@@ -1,12 +1,13 @@
 import { headers } from "@/utils/HeaderApi";
 
-const url = process.env.NEXT_PUBLIC_API_URL_ITENS as string;
+const url = process.env.NEXT_PUBLIC_API_URL_PEDIDOS as string;
 
-export const getItem = async (idItem: number) => {
+export const postItem = async (dataOrder: any) => {
   try {
-    const response = await fetch(`${url}/${idItem}`, {
-      method: "GET",
+    const response = await fetch(url, {
+      method: "POST",
       headers: headers(),
+      body: JSON.stringify(dataOrder),
       next: {
         revalidate: 1000 * 10,
       },
