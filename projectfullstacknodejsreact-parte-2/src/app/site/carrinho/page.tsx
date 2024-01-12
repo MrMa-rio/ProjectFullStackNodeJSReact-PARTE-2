@@ -27,10 +27,12 @@ export default function page() {
   const sumSubTotal = () => {
     const dataCart:ItemPropsCart[] = getDataLS()
     let sum = 0
+    
     dataCart?.map((item) => {
       sum = (sum + Number(item.preco_unitario ) * item.qtdItem)
     })
-    setSubTotal(sum)
+    let sumFormat = Number(sum.toFixed(2))
+    setSubTotal(sumFormat)
   }
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function page() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center xl:px-10 pt-8 xl:pt-28 px-2">
+      <div className="flex flex-col justify-center items-center pb-4 xl:px-10 pt-8 xl:pt-20 px-2">
         <div className="w-full md:w-[80%] h-fit py-2">
           <button
             onClick={backRouter}
@@ -73,6 +75,7 @@ export default function page() {
                       preco_unitario={item.preco_unitario}
                       qtdItem_={item.qtdItem}
                       key={item.idItem}
+                      sumSubTotal={sumSubTotal}
                     />
                   );
                 })

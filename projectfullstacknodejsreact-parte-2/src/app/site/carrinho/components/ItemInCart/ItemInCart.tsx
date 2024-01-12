@@ -3,8 +3,10 @@ import { ItemProps } from "@/typesObjects/ItemProps";
 import { Trash2 } from "lucide-react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMainContext } from "@/hooks/useMainContext";
+import { useItemContext } from "@/hooks/useItemContext";
 interface ItemProp extends ItemProps {
   qtdItem_: number;
+  sumSubTotal: () => void
 }
 
 export const ItemInCart = ({
@@ -13,10 +15,12 @@ export const ItemInCart = ({
   nome,
   preco_unitario,
   qtdItem_,
+  sumSubTotal
 }: ItemProp) => {
   const [qtdItem, setQtdItem] = useState(qtdItem_);
   const { RemoveItemLS, existingItem, setDataLS } = useLocalStorage("cart", []);
   const { setCountCart, countCart } = useMainContext();
+  const { setSubTotal, subTotal } = useItemContext()
   const array: number[] = [1, 2, 3, 4, 6, 7, 8, 9, 10]; //Melhorar a logica de como e feito as opcoes do select
   const eventDeleteItem = () => {
     RemoveItemLS(idItem);
@@ -32,6 +36,8 @@ export const ItemInCart = ({
         preco_unitario: preco_unitario,
         qtdItem: qtdItem,
       });
+    setSubTotal(subTotal)
+    sumSubTotal()
   }, [qtdItem]);
   return (
     <>
@@ -53,8 +59,8 @@ export const ItemInCart = ({
             value={qtdItem}
             onChange={(e) => setQtdItem(Number(e.currentTarget.value))}
           >
-            {array.map((value) => (
-              <option value={value}>{value}</option> //Momentaneo
+            {array.map((value, index) => (
+              <option key={index} value={value}>{value}</option> //Momentaneo
             ))}
           </select>
         </div>

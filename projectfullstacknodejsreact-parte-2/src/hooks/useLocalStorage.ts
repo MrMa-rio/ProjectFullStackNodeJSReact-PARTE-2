@@ -70,7 +70,7 @@ export const useLocalStorage = <T>(item: string, valueInitial: T) => {
   };
 
   const getDataLS = () => {
-    const dataExisting = localStorage.getItem(item);
+    const dataExisting = localStorage && localStorage.getItem(item);
     if (dataExisting) {
       return JSON.parse(dataExisting);
     }
