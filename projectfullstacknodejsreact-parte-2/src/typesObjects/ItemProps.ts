@@ -4,3 +4,6 @@ export interface ItemProps {
   preco_unitario: string;
   imagem_64: string;
 }
+export interface ItemPropsCart extends ItemProps {
+  qtdItem: number
+}

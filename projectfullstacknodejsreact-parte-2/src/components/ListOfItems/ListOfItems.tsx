@@ -1,11 +1,8 @@
 import { useItems } from "@/hooks/useItems";
 import { Item } from "./components/Item/Item";
 import { useSearchContext } from "@/hooks/useSearchContext";
-import { XCircle } from "lucide-react";
-import { useEffect, useState } from "react";
-import { ItemContextProvider } from "@/contexts";
+import { useState } from "react";
 import { useItemContext } from "@/hooks/useItemContext";
-import { ModalItem } from "./components/ModalItem/ModalItem";
 
 export const ListOfItems = () => {
   const { data, Loading, Error } = useItems();
@@ -32,7 +29,7 @@ export const ListOfItems = () => {
           <div className="xl:w-[80%] h-fit p-10 bg-orange-400 bg-opacity-15 rounded-xl grid md:grid-cols-2 gap-10 max-w-[1280px]">
             {data?.map((i, index) => {
               return (
-                <>
+                <div key={index}>
                   {search &&
                     i.nome
                       ?.toLocaleLowerCase()
@@ -58,12 +55,12 @@ export const ListOfItems = () => {
                       key={index}
                     />
                   )}
-                </>
+                </div>
               );
             })}
           </div>
         )}
-        { isShow && <ModalItem setIsShow={setIsShow} />}
+        {/* { isShow && <ModalItem setIsShow={setIsShow} />} */}
       </div>
     </>
   );

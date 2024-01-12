@@ -1,5 +1,5 @@
 import Image from "next/image";
-import image404 from "@/assets/not-found-image.jpg"
+import image404 from "@/assets/not-found-image.jpg";
 import { ItemProps } from "@/typesObjects/ItemProps";
 import { PlusCircle } from "lucide-react";
 import { useItemContext } from "@/hooks/useItemContext";
@@ -8,8 +8,8 @@ import { useItem } from "@/hooks/useItem";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface ItemProps2 extends ItemProps {
-  isShow: boolean
-  setIsShow: (value: boolean) => void
+  isShow: boolean;
+  setIsShow: (value: boolean) => void;
 }
 
 export const Item = ({
@@ -18,27 +18,28 @@ export const Item = ({
   nome,
   preco_unitario,
   setIsShow,
-  isShow
-
+  isShow,
 }: ItemProps2) => {
-
   //const {setItemID} = useItemContext()
-  const { setCountCart, countCart } = useMainContext()
-  const {setDataLS, getDataLS} = useLocalStorage("cart", [])
+  const { setCountCart, countCart } = useMainContext();
+  const { setDataLS, getDataLS, existingItem } = useLocalStorage("cart", []);
   // const {data} = useItem(idItem)
   // const targetItem = () => {
   //   setIsShow(true)
   //   setItemID(idItem)
   // } era usado para abrir um popup do item
   const eventClick = () => {
+    if (existingItem(idItem)) return console.log("Item ja adicionado");
     setDataLS({
-      idItem:idItem,
-      imagem_64:imagem_64,
-      nome:nome,
-      preco_unitario:preco_unitario,
-    })
-    setCountCart(getDataLS().length)
-  }
+      idItem: idItem,
+      imagem_64: imagem_64,
+      nome: nome,
+      preco_unitario: preco_unitario,
+      qtdItem: 1,
+    });
+    setCountCart(getDataLS().length);
+    return console.log("adicionado com sucesso");
+  };
 
   return (
     <>
@@ -58,9 +59,11 @@ export const Item = ({
           <p className="text-lg overflow-x-hidden">{nome}</p>
           <p className="text-lg">R${preco_unitario}</p>
           {/* <span className="text-orange-400 hover:text-orange-500 cursor-pointer">Detalhes do Item</span> */}
-          <div className="flex justify-center items-center gap-2 w-[80%] border-2 border-orange-500 px-2 rounded-md active:scale-105 transition-all duration-150">
-            <PlusCircle />
-            <button onClick={() => eventClick() } className="text-lg w-full">Adicionar</button>
+          <div className="">
+            <button onClick={() => eventClick()} className="flex justify-center items-center gap-2 border-2 border-orange-500 px-2 rounded-md active:scale-105 transition-all duration-150 text-lg w-full">
+              <PlusCircle />
+              <p>Adicionar</p>
+            </button>
           </div>
         </div>
       </div>

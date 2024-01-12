@@ -1,21 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemProps } from "@/typesObjects/ItemProps";
-import {  Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useMainContext } from "@/hooks/useMainContext";
 interface ItemProp extends ItemProps {
-  qtdItem_: number
+  qtdItem_: number;
 }
 
-export const ItemInCart = ({ idItem, imagem_64, nome, preco_unitario, qtdItem_ }: ItemProp) => {
-  const [qtdItem, setQtdItem] = useState(qtdItem_)
-  const {RemoveItemLS} = useLocalStorage("cart", [])
-  const {setCountCart, countCart} = useMainContext()
-
+export const ItemInCart = ({
+  idItem,
+  imagem_64,
+  nome,
+  preco_unitario,
+  qtdItem_,
+}: ItemProp) => {
+  const [qtdItem, setQtdItem] = useState(qtdItem_);
+  const { RemoveItemLS, existingItem, setDataLS } = useLocalStorage("cart", []);
+  const { setCountCart, countCart } = useMainContext();
+  const array: number[] = [1, 2, 3, 4, 6, 7, 8, 9, 10]; //Melhorar a logica de como e feito as opcoes do select
   const eventDeleteItem = () => {
-    RemoveItemLS(idItem)
-    setCountCart(countCart-1)
-  }
+    RemoveItemLS(idItem);
+    setCountCart(countCart - 1);
+  };
+
+  useEffect(() => {
+    if (existingItem(idItem))
+      setDataLS({
+        idItem: idItem,
+        imagem_64: imagem_64,
+        nome: nome,
+        preco_unitario: preco_unitario,
+        qtdItem: qtdItem,
+      });
+  }, [qtdItem]);
   return (
     <>
       <div className="flex justify-center items-center p-3 w-[90%] h-fit border-2 rounded-2xl hover:shadow-xl transition-all border-gray-200">
@@ -36,11 +53,9 @@ export const ItemInCart = ({ idItem, imagem_64, nome, preco_unitario, qtdItem_ }
             value={qtdItem}
             onChange={(e) => setQtdItem(Number(e.currentTarget.value))}
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            {array.map((value) => (
+              <option value={value}>{value}</option> //Momentaneo
+            ))}
           </select>
         </div>
         <button onClick={eventDeleteItem} className="self-start">
