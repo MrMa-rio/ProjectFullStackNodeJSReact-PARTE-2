@@ -24,8 +24,8 @@ export const useLocalStorage = <T>(item: string, valueInitial: T) => {
     return "";
   };
 
-  const deleteLocalStorageAuth = () => {
-    localStorage.removeItem("token");
+  const deleteLocalStorage = () => {
+    localStorage.removeItem(item);
   };
 
   const RemoveItemLS = (idItem: number) => {
@@ -92,7 +92,7 @@ export const useLocalStorage = <T>(item: string, valueInitial: T) => {
     setDataLoginAuth,
     getDataLoginAuth,
     getLocalStorageAuth,
-    deleteLocalStorageAuth,
+    deleteLocalStorage,
     setDataLS,
     getDataLS,
     RemoveItemLS,

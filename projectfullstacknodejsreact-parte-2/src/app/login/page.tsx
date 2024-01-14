@@ -12,7 +12,7 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const { setLocalStorageAuth, deleteLocalStorageAuth } = useLocalStorage(
+  const { setLocalStorageAuth, deleteLocalStorage } = useLocalStorage(
     "token",
     []
   );
@@ -22,7 +22,7 @@ export default function Login() {
   });
 
   useEffect(() => {
-    deleteLocalStorageAuth();
+    deleteLocalStorage();
   }, []);
 
   useEffect(() => {

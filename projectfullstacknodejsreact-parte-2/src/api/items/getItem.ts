@@ -1,3 +1,4 @@
+import { ItemProps } from "@/typesObjects";
 import { headers } from "@/utils/HeaderApi";
 
 const url = process.env.NEXT_PUBLIC_API_URL_ITENS as string;
@@ -12,7 +13,7 @@ export const getItem = async (idItem: number) => {
       },
     });
     const results = await response.json();
-    const result: any = results;
+    const result: ItemProps = results;
     return result;
   } catch (err) {}
 };

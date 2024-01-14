@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function Login() {
   const router = useRouter();
-  const { setLocalStorageAuth, deleteLocalStorageAuth } = useLocalStorage(
+  const { setLocalStorageAuth, deleteLocalStorage} = useLocalStorage(
     "token",
     []
   );

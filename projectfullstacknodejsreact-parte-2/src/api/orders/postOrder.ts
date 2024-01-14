@@ -1,8 +1,10 @@
+import { OrderProps } from "@/typesObjects";
+import { ResponseStatus } from "@/typesObjects/ResponseStatus";
 import { headers } from "@/utils/HeaderApi";
 
-const url = process.env.NEXT_PUBLIC_API_URL_PEDIDOS as string;
+const url = process.env.NEXT_PUBLIC_API_PEDIDOS as string;
 
-export const postItem = async (dataOrder: any) => {
+export const postOrder = async (dataOrder: Omit<OrderProps, "idPedido">) => {
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -12,8 +14,10 @@ export const postItem = async (dataOrder: any) => {
         revalidate: 1000 * 10,
       },
     });
-    const results = await response.json();
-    const result: any = results;
-    return result;
-  } catch (err) {}
+    const results:OrderProps = await response.json();
+    return results
+    
+  } catch (err:any) {
+    return err;
+  }
 };

@@ -1,9 +1,9 @@
 import { getOrderClient } from "@/api/orderClient/getOrderClient";
 import { useQuery } from "@tanstack/react-query";
 
-export const useOrderClient = (idCliente: number, idPedido?: number) => {
+export const useOrderClient = (idCliente: number, idPedido: number) => {
   const { data, isError, isLoading, isFetching } = useQuery({
-    queryKey: ["orderClient", idCliente],
+    queryKey: ["orderClient", idCliente, idPedido],
     queryFn: () => getOrderClient(idCliente, idPedido),
   });
   return {
