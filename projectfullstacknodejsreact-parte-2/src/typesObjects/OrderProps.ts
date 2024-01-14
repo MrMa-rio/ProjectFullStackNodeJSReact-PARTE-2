@@ -3,4 +3,5 @@ export interface OrderProps {
   descricao: string;
   fkCliente: number;
   dataPedido: string;
+  statusPedido: number;
 }

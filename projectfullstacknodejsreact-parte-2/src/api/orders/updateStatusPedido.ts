@@ -4,20 +4,20 @@ import { headers } from "@/utils/HeaderApi";
 
 const url = process.env.NEXT_PUBLIC_API_PEDIDOS as string;
 
-export const postOrder = async (dataOrder: Omit<OrderProps, "idPedido"|"statusPedido">) => {
+export const updateStatusPedido = async (idPedido: number, statusPedido: number) => {
   try {
     const response = await fetch(url, {
-      method: "POST",
+      method: "PATCH",
       headers: headers(),
-      body: JSON.stringify(dataOrder),
+      body: JSON.stringify({ idPedido: idPedido, statusPedido: statusPedido }),
       next: {
         revalidate: 1000 * 10,
       },
     });
-    const results:OrderProps = await response.json();
-    return results
-    
-  } catch (err:any) {
+    const results: ResponseStatus = await response.json();
+    const result = results
+    return result;
+  } catch (err: any) {
     return err;
   }
 };

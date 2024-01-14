@@ -2,18 +2,40 @@ import { useItemsOrder } from "@/hooks/useItemsOrder";
 import { OrderProps } from "@/typesObjects";
 import { converteDateHours } from "@/utils/converteDataHora";
 import { ChevronDown, ChevronUp, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemInOrder } from "../ItemInOrder/ItemInOrder";
+import { StatusPedidoType } from "@/typesObjects/StatusPedidoType";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { updateStatusPedido } from "@/api/orders/updateStatusPedido";
 
 export const Order = ({
   idPedido,
   dataPedido,
   descricao,
   fkCliente,
+  statusPedido,
 }: OrderProps) => {
   const { date, hours } = converteDateHours(dataPedido);
   const [isShow, setIsShow] = useState(false);
   const { data } = useItemsOrder(idPedido);
+  const useQuery = useQueryClient();
+  const [targetStatus, setTargetStatus] = useState(0);
+  const statusChange: string =
+    StatusPedidoType["Em andamento"] == statusPedido
+      ? "bg-orange-400"
+      : StatusPedidoType["Finalizado"] == statusPedido
+        ? "bg-green-400"
+        : "bg-red-700";
+  const changeStatusOrder = useMutation({
+    mutationFn: () => updateStatusPedido(idPedido, targetStatus),
+    onSettled: () => useQuery.invalidateQueries({ queryKey: ["orderClient"] }),
+  });
+
+  useEffect(() => {
+    if (targetStatus !== 0) {
+      changeStatusOrder.mutate();
+    }
+  }, [targetStatus]);
 
   return (
     <div className="flex flex-col gap-4 w-full h-fit rounded-xl border-2 border-orange-300 px-3">
@@ -21,9 +43,9 @@ export const Order = ({
         <p>
           ID Pedido: <strong># {idPedido}</strong>
         </p>
-        <div className="flex w-fit gap-2 items-center">
-          <div className="w-3 h-3 rounded-full bg-orange-400"></div>
-          <p>Em Andamento</p>
+        <div className="flex w-fit gap-2 items-center ">
+          <div className={`w-3 h-3 rounded-full ${statusChange}`}></div>
+          <p>{StatusPedidoType[statusPedido]}</p>
         </div>
       </header>
       <div className="flex flex-col">
@@ -55,13 +77,25 @@ export const Order = ({
           />
         ))}
       </div>
-      <div>
-        TOTAL: R$ 95.00
-      </div>
+      <div>TOTAL: R$ 95.00</div>
       <footer className="p-2">
-        <div className={`${isShow ? "flex" : "hidden"} justify-end`}>
-          <button className="flex items-center gap-2 bg-red-600 text-white text-sm lg:text-base p-1 lg:p-2 rounded-lg bg-opacity-70 hover:bg-opacity-100 active:scale-105">
-            <Trash2 />
+        <div
+          className={`${
+            isShow && statusPedido === StatusPedidoType["Em andamento"]
+              ? "flex"
+              : "hidden"
+          } justify-between  `}
+        >
+          <button
+            onClick={() => setTargetStatus(1)}
+            className="flex items-center gap-2 bg-green-600 text-white text-sm lg:text-base p-1 lg:p-2 rounded-lg bg-opacity-70 hover:bg-opacity-100 active:scale-105 transition-all"
+          >
+            Pedido Entregue
+          </button>
+          <button
+            onClick={() => setTargetStatus(2)}
+            className="text-red-600 hover:text-white hover:bg-red-600 text-sm lg:text-base p-1 lg:p-2 rounded-lg bg-opacity-70 hover:bg-opacity-100 active:scale-105 transition-all"
+          >
             Cancelar Pedido
           </button>
         </div>

@@ -4,7 +4,6 @@ import { useOrdersClient } from "@/hooks/useOrdersClient";
 
 export const OrderList = () => {
   const { data, Error, Loading, Fetching } = useOrdersClient(29);
-
   return (
     <>
       {data?.map((item, index) => (
@@ -14,6 +13,7 @@ export const OrderList = () => {
           descricao={item.descricao}
           fkCliente={item.fkCliente}
           idPedido={item.idPedido}
+          statusPedido={item.statusPedido}
         />
       ))}
     </>

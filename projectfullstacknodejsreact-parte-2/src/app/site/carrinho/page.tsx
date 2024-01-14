@@ -103,7 +103,7 @@ export default function page() {
             VOLTAR
           </button>
         </div>
-        <div className="flex flex-col xl:flex-row items-center  xl:w-[80%] xl:h-[70vh] border-2 border-orange-200 rounded-2xl">
+        <div className="flex flex-col xl:flex-row items-center w-full md:w-[80%] xl:h-[70vh] border-2 border-orange-200 rounded-2xl">
           <div className="flex flex-col gap-8 w-full h-full pt-8 p-4">
             <h2 className="text-2xl">ITEMS</h2>
             <div className="flex flex-col gap-2 h-[600px] overflow-y-scroll shadow-md xl:shadow-none rounded-2xl xl:rounded-none">
