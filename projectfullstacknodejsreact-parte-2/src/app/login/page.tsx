@@ -7,18 +7,22 @@ import { useEffect, useState } from "react";
 import image from "../../../Carne Bisteca c-Salada.jpg";
 import Image from "next/image";
 import { LockKeyhole, User2 } from "lucide-react";
+import { useMainContext } from "@/hooks/useMainContext";
+import { decode } from "jsonwebtoken";
+import { PayloadToken } from "@/typesObjects/PayloadToken";
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const { setLocalStorageAuth, deleteLocalStorage } = useLocalStorage(
-    "token",
-    []
-  );
+  const [emailLogin, setEmailLogin] = useState("");
+  const [senhaLogin, setSenhaLogin] = useState("");
+  const { setAuthToken, setEmail, setIdCliente, setNivelAcesso, setNome, authToken } =
+    useMainContext();
+  const { setLocalStorageAuth, deleteLocalStorage, getLocalStorageAuth } =
+    useLocalStorage("token", []);
   const login = useMutation({
     mutationKey: ["token"],
-    mutationFn: async () => await authLogin(1, { email: email, senha: senha }),
+    mutationFn: async () =>
+      await authLogin(1, { email: emailLogin, senha: senhaLogin }),
   });
 
   useEffect(() => {
@@ -28,9 +32,21 @@ export default function Login() {
   useEffect(() => {
     if (login?.data?.status == 200) {
       setLocalStorageAuth({ token: login.data.token });
+      setAuthToken(login.data.token);
       router.push("/site");
     }
   }, [login.data]);
+  useEffect(() => {
+    const payload = decode(authToken) as PayloadToken;
+    if (payload) {
+      console.log(payload.email);
+      setEmail(payload.email);
+      setNome(payload.nome);
+      setNivelAcesso(payload.nivel_acesso);
+      setIdCliente(payload.idCliente);
+      
+    }
+  }, [authToken]);
 
   return (
     <div className="w-screen h-screen bg-orange-500">
@@ -52,7 +68,7 @@ export default function Login() {
               <input
                 type="text"
                 placeholder="Digite seu usuario"
-                onInput={(e) => setEmail(e.currentTarget.value)}
+                onInput={(e) => setEmailLogin(e.currentTarget.value)}
                 className="bg-orange-600 rounded-md w-64 h-10 bg-opacity-50 outline-none p-3 placeholder-white"
               />
             </div>
@@ -61,16 +77,15 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="Digite sua senha"
-                onChange={(e) => setSenha(e.currentTarget.value)}
-                onKeyDown={(e) => e.key=="Enter" && login.mutate()}
+                onChange={(e) => setSenhaLogin(e.currentTarget.value)}
+                onKeyDown={(e) => e.key == "Enter" && login.mutate()}
                 className="bg-orange-600 rounded-md w-64 h-10 bg-opacity-50 outline-none p-3 placeholder-white"
               />
             </div>
             <div>
               <button
-                  className="w-72 h-10 hover:bg-orange-300 hover:bg-opacity-50 rounded-md transition-all "
-                  onClick={() => login.mutate()}
-                
+                className="w-72 h-10 hover:bg-orange-300 hover:bg-opacity-50 rounded-md transition-all "
+                onClick={() => login.mutate()}
               >
                 Logar
               </button>
@@ -100,14 +115,16 @@ export default function Login() {
             <h2 className="text-4xl text-white text-center z-50">
               Bem-vindo ao mundo da Comida!
             </h2>
-            <h2 className="text-4xl text-white text-center z-50">Área do Cliente</h2>
+            <h2 className="text-4xl text-white text-center z-50">
+              Área do Cliente
+            </h2>
             <div className="flex flex-col justify-center items-center gap-4 text-white z-50">
               <div className="flex gap-2 justify-center items-center">
                 <User2 />
                 <input
                   type="text"
                   placeholder="Digite seu usuario"
-                  onInput={(e) => setEmail(e.currentTarget.value)}
+                  onInput={(e) => setEmailLogin(e.currentTarget.value)}
                   className="bg-orange-700 rounded-md w-64 h-10 bg-opacity-50 outline-none p-3 placeholder-white"
                 />
               </div>
@@ -116,7 +133,7 @@ export default function Login() {
                 <input
                   type="password"
                   placeholder="Digite sua senha"
-                  onChange={(e) => setSenha(e.currentTarget.value)}
+                  onChange={(e) => setSenhaLogin(e.currentTarget.value)}
                   className="bg-orange-700 rounded-md w-64 h-10 bg-opacity-50 outline-none p-3 placeholder-white"
                 />
               </div>

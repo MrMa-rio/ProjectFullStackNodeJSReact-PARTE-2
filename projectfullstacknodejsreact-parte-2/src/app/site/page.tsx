@@ -2,12 +2,14 @@
 import { ListOfItems, SearchInput } from "@/components";
 import { ItemContextProvider } from "@/contexts";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useMainContext } from "@/hooks/useMainContext";
 import { useEffect } from "react";
 
 export default function Home() {
   const { getLocalStorageAuth } = useLocalStorage("token", []);
+  const {countCart} = useMainContext() //Existe um problema de sincronizacao onde esta afetando o carregamento de informacoes trocadas durante o login e transicao de pagina
   useEffect(() => {
-    if (getLocalStorageAuth()) return console.log("Autenticado!!");
+    if (getLocalStorageAuth()) return console.log("Autenticado");
     return console.log("Nao Autenticado!!");
   }, []);
   return (

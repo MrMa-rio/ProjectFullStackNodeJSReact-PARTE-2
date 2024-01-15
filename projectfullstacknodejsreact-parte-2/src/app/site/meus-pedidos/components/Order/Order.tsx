@@ -7,6 +7,7 @@ import { ItemInOrder } from "../ItemInOrder/ItemInOrder";
 import { StatusPedidoType } from "@/typesObjects/StatusPedidoType";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { updateStatusPedido } from "@/api/orders/updateStatusPedido";
+import { useCalculateOrder } from "@/hooks/useCalculateOrder";
 
 export const Order = ({
   idPedido,
@@ -18,6 +19,7 @@ export const Order = ({
   const { date, hours } = converteDateHours(dataPedido);
   const [isShow, setIsShow] = useState(false);
   const { data } = useItemsOrder(idPedido);
+  const totalPedido = useCalculateOrder(idPedido)
   const useQuery = useQueryClient();
   const [targetStatus, setTargetStatus] = useState(0);
   const statusChange: string =
@@ -77,7 +79,7 @@ export const Order = ({
           />
         ))}
       </div>
-      <div>TOTAL: R$ 95.00</div>
+      <div>TOTAL: R$ {totalPedido.data?.total}</div>
       <footer className="p-2">
         <div
           className={`${

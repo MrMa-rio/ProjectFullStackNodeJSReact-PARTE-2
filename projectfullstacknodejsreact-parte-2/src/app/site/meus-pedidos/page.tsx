@@ -1,12 +1,14 @@
 "use client";
-import { useOrder } from "@/hooks/useOrder";
-import { useOrderClient } from "@/hooks/useOrderClient";
-import { useEffect } from "react";
+import { useMainContext } from "@/hooks/useMainContext";
 import { OrderList } from "./components/OrderList/OrderList";
+import { useEffect } from "react";
 
 export default function page() {
- 
+  const { setStatusOrder, idCliente } = useMainContext();
 
+  useEffect(() => {
+    console.log(idCliente);
+  }, [idCliente]);
   return (
     <>
       <div className="w-full h-fit flex flex-col px-4 gap-8">
@@ -17,11 +19,12 @@ export default function page() {
             name="StatusPedido"
             id="StatusPedido"
             className="outline-none flex justify-center items-center w-64 h-12 px-1 bg-black bg-opacity-5 rounded-md"
+            onChange={(e) => setStatusOrder(Number(e.currentTarget.value))}
           >
-            <option value={0}>Todos</option>
-            <option value={1}>Cancelado</option>
-            <option value={2}>Em Andamento</option>
-            <option value={3}>Finalizado</option>
+            <option value={3}>Todos</option>
+            <option value={0}>Em Andamento</option>
+            <option value={1}>Finalizado</option>
+            <option value={2}>Cancelado</option>
           </select>
         </div>
         <div>
