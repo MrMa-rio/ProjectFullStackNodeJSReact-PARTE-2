@@ -15,7 +15,7 @@ export const OrderList = () => {
       <>
         {data?.map((item, index) => {
           return (
-            <>
+            <div key={index}>
               {(statusOrder === item.statusPedido || statusOrder === 3) && (
                 <Order
                   key={index}
@@ -26,7 +26,7 @@ export const OrderList = () => {
                   statusPedido={item.statusPedido}
                 />
               )}
-            </>
+            </div>
           );
         })}
       </>
