@@ -21,22 +21,10 @@ const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <div>
-      {
-        <MainContextProvider>
-          <ItemContextProvider>
-            <SearchContextProvider>
-              <QueryClientProvider client={client}>
-                <PrimeReactProvider>
-                  <div className={saira.className}>
-                    <HeaderClient />
-                    {children}
-                  </div>
-                </PrimeReactProvider>
-              </QueryClientProvider>
-            </SearchContextProvider>
-          </ItemContextProvider>
-        </MainContextProvider>
-      }
+      <div className={saira.className}>
+        <HeaderClient />
+        {children}
+      </div>
     </div>
   );
 }

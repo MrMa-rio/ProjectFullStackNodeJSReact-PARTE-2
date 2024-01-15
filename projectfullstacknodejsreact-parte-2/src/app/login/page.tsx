@@ -39,7 +39,7 @@ export default function Login() {
   useEffect(() => {
     const payload = decode(authToken) as PayloadToken;
     if (payload) {
-      console.log(payload.email);
+      //console.log(payload.email);
       setEmail(payload.email);
       setNome(payload.nome);
       setNivelAcesso(payload.nivel_acesso);

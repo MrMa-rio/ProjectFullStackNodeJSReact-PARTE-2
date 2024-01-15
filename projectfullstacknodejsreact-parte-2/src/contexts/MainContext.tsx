@@ -8,7 +8,7 @@ export const MainContext = createContext({
   setCountCart: (value: number) => {},
   statusOrder: 3,
   setStatusOrder: (value: number) => {},
-  nome: "",
+  nome: "Convidado",
   setNome: (value: string) => {},
   idCliente: 0,
   setIdCliente: (value: number) => {},

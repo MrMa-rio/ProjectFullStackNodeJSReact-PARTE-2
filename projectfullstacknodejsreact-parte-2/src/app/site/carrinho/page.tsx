@@ -24,11 +24,12 @@ export default function page() {
     router.back();
   };
   const { getDataLS, deleteLocalStorage } = useLocalStorage("cart", []);
-  const { countCart, setCountCart } = useMainContext();
+  const {idCliente, nivelAcesso, nome, email, countCart, setCountCart} = useMainContext()
   const { setSubTotal, subTotal } = useItemContext();
   const [arrayCart, setArrayCart] = useState<ItemProp[]>(getDataLS());
   const [description, setDescription] = useState("");
   const taxService = 10;
+
   const eventTargetBuy = (idPedido: number) => {
     const itemsCart: ItemProp[] = getDataLS();
     const itemsPedido: Omit<ItemOrderProps, "id">[] = [];
@@ -50,7 +51,7 @@ export default function page() {
   const createOrder = useMutation({
     mutationFn: () =>
       postOrder({
-        dataPedido: dataAtual.toISOString(),
+        dataPedido: dataAtual.toISOString().substring(0, 19),
         descricao: description,
         fkCliente: 29,
       }),
@@ -127,7 +128,6 @@ export default function page() {
             </div>
           </div>
           <div className="w-0.5 h-[90%] hidden xl:flex bg-gray-400 rounded-xl"></div>
-
           <div className="flex flex-col w-full xl:w-1/2 h-full pt-8 p-4 gap-2">
             <h2 className="text-2xl">SUBTOTAL</h2>
             <div className="flex flex-col justify-center w-full h-[70%] py-6">

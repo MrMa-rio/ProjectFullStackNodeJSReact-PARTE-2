@@ -2,13 +2,13 @@
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
-export default function Page(){
+export default function Page() {
     const router = useRouter()
 
-    useEffect(() =>{
-       router.push("/site")
-    },[])
-    return(
+    useEffect(() => {
+        router.push("/site")
+    }, [])
+    return (
         <></>
     )
 }

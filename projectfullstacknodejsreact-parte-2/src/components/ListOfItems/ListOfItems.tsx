@@ -1,7 +1,7 @@
 import { useItems } from "@/hooks/useItems";
 import { Item } from "./components/Item/Item";
 import { useSearchContext } from "@/hooks/useSearchContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useItemContext } from "@/hooks/useItemContext";
 
 export const ListOfItems = () => {

@@ -16,16 +16,17 @@ export default function RootLayout({
   children: ReactNode
 }) {
   return (
-    <html lang="pt-br">
+    <div className={` w-screen h-fit`}>
+      {children}
+    </div>
+  )
+}
+{/* <html lang="pt-br">
       {<MainContextProvider>
         <QueryClientProvider client={QClient}>
           <PrimeReactProvider>
-            <body className={`${saira.className} w-screen h-fit`}>
-              {children}
-            </body>
+            
           </PrimeReactProvider>
         </QueryClientProvider>
       </MainContextProvider>}
-    </html>
-  )
-}
+    </html> */}
