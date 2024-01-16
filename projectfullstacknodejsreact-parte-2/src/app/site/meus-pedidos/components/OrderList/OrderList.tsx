@@ -5,12 +5,12 @@ import { useMainContext } from "@/hooks/useMainContext";
 
 export const OrderList = () => {
   const { statusOrder, idCliente } = useMainContext();
-  const { data, Error, Loading, Fetching } = useOrdersClient(29);
+  const { data, Error, Loading, Fetching } = useOrdersClient(idCliente);
 
   useEffect(() => {
     console.log(idCliente);
   },[idCliente]);
-  if (data && data?.length >= 0) {
+  if (data && data?.length > 0) {
     return (
       <>
         {data?.map((item, index) => {

@@ -1,6 +1,4 @@
 "use client";
-import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { ItemInCart } from "./components/ItemInCart/ItemInCart";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { ItemProps, ItemPropsCart } from "@/typesObjects/ItemProps";
@@ -12,17 +10,15 @@ import { useMutation } from "@tanstack/react-query";
 import { postOrder } from "@/api/orders/postOrder";
 import { postItemOrder } from "@/api/itemOrder/postItemOrder";
 import { ItemOrderProps, OrderProps } from "@/typesObjects";
+import { BackButton } from "@/components/Buttons/BackButton";
 
 interface ItemProp extends ItemProps {
   qtdItem: number;
 }
 
 export default function page() {
+
   const dataAtual = new Date();
-  const router = useRouter();
-  const backRouter = () => {
-    router.back();
-  };
   const { getDataLS, deleteLocalStorage } = useLocalStorage("cart", []);
   const {idCliente, nivelAcesso, nome, email, countCart, setCountCart} = useMainContext()
   const { setSubTotal, subTotal } = useItemContext();
@@ -53,7 +49,7 @@ export default function page() {
       postOrder({
         dataPedido: dataAtual.toISOString().substring(0, 19),
         descricao: description,
-        fkCliente: 29,
+        fkCliente: idCliente,
       }),
     onMutate: () => console.log("Processando..."),
     onSuccess: (data: OrderProps) => {
@@ -62,6 +58,8 @@ export default function page() {
         setArrayCart(getDataLS());
         console.log("Sucesso");
       }
+      else alert("Por favor faça o login para continuar com a transação") // estruturar de forma isolada para atender melhor o retorno
+
     },
     onError: () => console.log("Falha na compra!"),
     onSettled(data, error, variables, context) {
@@ -96,13 +94,7 @@ export default function page() {
     <>
       <div className="flex flex-col justify-center items-center pb-4 xl:px-10 pt-8 xl:pt-20 px-2">
         <div className="w-full md:w-[80%] h-fit py-2">
-          <button
-            onClick={backRouter}
-            className="flex gap-2 border-2 p-1 border-orange-200 rounded-lg transition-all hover:bg-orange-200"
-          >
-            <ArrowLeft />
-            VOLTAR
-          </button>
+          <BackButton />
         </div>
         <div className="flex flex-col xl:flex-row items-center w-full md:w-[80%] xl:h-[70vh] border-2 border-orange-200 rounded-2xl">
           <div className="flex flex-col gap-8 w-full h-full pt-8 p-4">

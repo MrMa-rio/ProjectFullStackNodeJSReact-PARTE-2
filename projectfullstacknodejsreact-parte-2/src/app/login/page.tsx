@@ -10,32 +10,45 @@ import { LockKeyhole, User2 } from "lucide-react";
 import { useMainContext } from "@/hooks/useMainContext";
 import { decode } from "jsonwebtoken";
 import { PayloadToken } from "@/typesObjects/PayloadToken";
+import { ResponseAuthType } from "@/typesObjects";
 
 export default function Login() {
-  const router = useRouter();
-  const [emailLogin, setEmailLogin] = useState("");
-  const [senhaLogin, setSenhaLogin] = useState("");
-  const { setAuthToken, setEmail, setIdCliente, setNivelAcesso, setNome, authToken } =
-    useMainContext();
+
   const { setLocalStorageAuth, deleteLocalStorage, getLocalStorageAuth } =
     useLocalStorage("token", []);
+  const { setAuthToken, setEmail, setIdCliente, setNivelAcesso, setNome, authToken, setIsAuthenticated } =
+    useMainContext();
+  const router = useRouter();
+
+  const handleLogin = (e: ResponseAuthType) => {
+
+    if (e.status == 200) {
+      setLocalStorageAuth({ token: e.token });
+      setAuthToken(e.token);
+      setIsAuthenticated(true)
+      router.push("/site");
+    }
+  }
+  const handleError = () => { }
+  const handleMutate = () => { }
+
+  const [emailLogin, setEmailLogin] = useState("");
+  const [senhaLogin, setSenhaLogin] = useState("");
+
+
   const login = useMutation({
     mutationKey: ["token"],
     mutationFn: async () =>
       await authLogin(1, { email: emailLogin, senha: senhaLogin }),
+    onSuccess: (e) => e &&  handleLogin(e),
+    onError: () => handleError,
+    onMutate: () => handleMutate
   });
 
   useEffect(() => {
     deleteLocalStorage();
   }, []);
 
-  useEffect(() => {
-    if (login?.data?.status == 200) {
-      setLocalStorageAuth({ token: login.data.token });
-      setAuthToken(login.data.token);
-      router.push("/site");
-    }
-  }, [login.data]);
   useEffect(() => {
     const payload = decode(authToken) as PayloadToken;
     if (payload) {
@@ -44,7 +57,6 @@ export default function Login() {
       setNome(payload.nome);
       setNivelAcesso(payload.nivel_acesso);
       setIdCliente(payload.idCliente);
-      
     }
   }, [authToken]);
 

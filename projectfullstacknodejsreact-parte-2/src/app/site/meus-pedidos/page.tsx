@@ -2,19 +2,24 @@
 import { useMainContext } from "@/hooks/useMainContext";
 import { OrderList } from "./components/OrderList/OrderList";
 import { useEffect } from "react";
+import { BackButton } from "@/components/Buttons/BackButton";
+import { useRouter } from "next/navigation";
 
 export default function page() {
-  const { setStatusOrder, idCliente } = useMainContext();
-
+  const { setStatusOrder, idCliente, isAuthenticated } = useMainContext();
+  const router = useRouter()
   useEffect(() => {
-    console.log(idCliente);
-  }, [idCliente]);
+    if(!isAuthenticated) router.push("/login")
+  }, []);
   return (
     <>
-      <div className="w-full h-fit flex flex-col px-4 gap-8">
+      {isAuthenticated && <div className="w-full h-fit flex flex-col px-4 gap-8">
         {" "}
         {/* retirar o h-screen apos o preenchimento  */}
-        <div className="flex w-full py-10 h-32">
+        <div className="flex flex-col gap-4 w-full py-10 h-fit">
+          <div className="w-32">
+            <BackButton />
+          </div>
           <select
             name="StatusPedido"
             id="StatusPedido"
@@ -33,7 +38,7 @@ export default function page() {
         <div className="flex flex-col gap-3 self-center w-full lg:w-[70%] xl:max-w-[900px] py-4">
           <OrderList />
         </div>
-      </div>
+      </div>}
     </>
   );
 }

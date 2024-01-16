@@ -7,11 +7,10 @@ import { useEffect } from "react";
 
 export default function Home() {
   const { getLocalStorageAuth } = useLocalStorage("token", []);
-  const {idCliente, nivelAcesso, nome, email} = useMainContext()
+  const {idCliente, nivelAcesso, nome, email, setIsAuthenticated} = useMainContext()
   useEffect(() => {
-    if (getLocalStorageAuth()) return console.log("Autenticado");
-    
-    return console.log("Nao Autenticado!!");
+    if (getLocalStorageAuth()) return setIsAuthenticated(true)
+    return setIsAuthenticated(false)
   }, []);
   return (
     <div className="w-full h-screen flex flex-col">

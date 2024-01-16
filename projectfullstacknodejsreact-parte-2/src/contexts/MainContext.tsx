@@ -2,20 +2,22 @@
 import { ReactNode, createContext, useState } from "react";
 
 export const MainContext = createContext({
+  isAuthenticated: false,
+  setIsAuthenticated: (value: boolean) => { },
   authToken: "",
-  setAuthToken: (value: string) => {},
+  setAuthToken: (value: string) => { },
   countCart: 0,
-  setCountCart: (value: number) => {},
+  setCountCart: (value: number) => { },
   statusOrder: 3,
-  setStatusOrder: (value: number) => {},
+  setStatusOrder: (value: number) => { },
   nome: "Convidado",
-  setNome: (value: string) => {},
+  setNome: (value: string) => { },
   idCliente: 0,
-  setIdCliente: (value: number) => {},
+  setIdCliente: (value: number) => { },
   nivelAcesso: 3,
-  setNivelAcesso: (value: number) => {},
+  setNivelAcesso: (value: number) => { },
   email: "",
-  setEmail: (value: string) => {},
+  setEmail: (value: string) => { },
 });
 interface ProviderProps {
   children: ReactNode;
@@ -28,9 +30,12 @@ export const MainContextProvider = ({ children }: ProviderProps) => {
   const [nivelAcesso, setNivelAcesso] = useState(3);
   const [nome, setNome] = useState("Convidado");
   const [email, setEmail] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   return (
     <MainContext.Provider
       value={{
+        isAuthenticated,
+        setIsAuthenticated,
         authToken,
         setAuthToken,
         countCart,

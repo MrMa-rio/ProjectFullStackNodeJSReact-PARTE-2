@@ -1,9 +1,17 @@
 import { ShoppingCart } from "./components/ShoppingCart/ShoppingCart";
 import { Logout } from "./components/Logout/Logout";
 import { useRouter } from "next/navigation";
+import { useMainContext } from "@/hooks/useMainContext";
+import { LogIn } from "./components/LogIn/LogIn";
+import { User } from "./components/User/User";
+import { useState } from "react";
+import { PopupUser } from "./components/PopupUser/PopupUser";
 
 export const HeaderClient = () => {
   const router = useRouter()
+  const { isAuthenticated } = useMainContext()
+  const [isPopup, setIsPopup] = useState(false)
+
   const initialRoute = () => {
     router.push("/site")
   }
@@ -17,11 +25,20 @@ export const HeaderClient = () => {
           O melhor sabor da cidade
         </h3>
         <div className="flex gap-3">
-            <ShoppingCart />
-            <Logout />
-
+          <ShoppingCart />
+          {isAuthenticated ?
+            <div>
+              <User isPopup={isPopup} setIsPopup={setIsPopup} />
+              <Logout />
+            </div>
+            :
+            <LogIn />
+          }
         </div>
       </div>
+      {isPopup && <div className="flex right-0 top-20 fixed w-64 h-fit bg-orange-300">
+          <PopupUser />
+      </div>}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MainContextProvider } from "@/contexts/MainContext";
 import { saira } from "@/utils/ChangeFont";
 import { PrimeReactProvider } from "primereact/api";
-import { ItemContextProvider } from "@/contexts";
+import { ItemContextProvider, SearchContextProvider } from "@/contexts";
 
 const client = new QueryClient()
 const metadata: Metadata = {
@@ -18,15 +18,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-br">
       {<MainContextProvider>
-        <ItemContextProvider>
-          <QueryClientProvider client={client}>
-            <PrimeReactProvider>
-              <body className={saira.className}>
-                {children}
-              </body>
-            </PrimeReactProvider>
-          </QueryClientProvider>
-        </ItemContextProvider>
+        <SearchContextProvider>
+          <ItemContextProvider>
+            <QueryClientProvider client={client}>
+              <PrimeReactProvider>
+                <body className={saira.className}>
+                  {children}
+                </body>
+              </PrimeReactProvider>
+            </QueryClientProvider>
+          </ItemContextProvider>
+        </SearchContextProvider>
       </MainContextProvider>}
     </html >
   );

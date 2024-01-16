@@ -8,8 +8,11 @@ export const ListOfItems = () => {
   const { data, Loading, Error } = useItems();
   const { search } = useSearchContext();
   const [isShow, setIsShow] = useState(false)
-  const {setItemID,  itemID} = useItemContext()
+  const { setItemID, itemID } = useItemContext()
 
+  useEffect(() => {
+    console.log(search)
+  }, [search])
   return (
     <>
       <div className="w-full xl:w-[80%] h-fit flex justify-center items-center">
@@ -27,37 +30,36 @@ export const ListOfItems = () => {
         )}
         {data && (
           <div className="xl:w-[80%] h-fit p-10 bg-orange-400 bg-opacity-15 rounded-xl grid md:grid-cols-2 gap-10 max-w-[1280px]">
-            {data?.map((i, index) => {
-              return (
-                <div key={index}>
-                  {search &&
-                    i.nome
-                      ?.toLocaleLowerCase()
-                      .includes(search.toLowerCase()) && (
-                      <Item
-                        idItem={i.idItem}
-                        imagem_64={i.imagem_64}
-                        nome={i.nome}
-                        preco_unitario={i.preco_unitario}
-                        isShow={isShow}
-                        setIsShow={setIsShow}
-                        key={index}
-                      />
-                    )}
-                  {!search && (
-                    <Item
-                      idItem={i.idItem}
-                      imagem_64={i.imagem_64}
-                      nome={i.nome}
-                      preco_unitario={i.preco_unitario}
-                      isShow={isShow}
-                      setIsShow={setIsShow}
-                      key={index}
-                    />
-                  )}
-                </div>
-              );
-            })}
+            {data?.map((i, index) =>
+
+              search ?
+                i.nome
+                  ?.toLocaleLowerCase()
+                  .includes(search.toLowerCase()) && (
+                  <Item
+                    idItem={i.idItem}
+                    imagem_64={i.imagem_64}
+                    nome={i.nome}
+                    preco_unitario={i.preco_unitario}
+                    isShow={isShow}
+                    setIsShow={setIsShow}
+                    key={index}
+                  />
+                )
+
+                : !search && (
+                  <Item
+                    idItem={i.idItem}
+                    imagem_64={i.imagem_64}
+                    nome={i.nome}
+                    preco_unitario={i.preco_unitario}
+                    isShow={isShow}
+                    setIsShow={setIsShow}
+                    key={index}
+                  />
+                )
+              )
+            }
           </div>
         )}
         {/* { isShow && <ModalItem setIsShow={setIsShow} />} */}
