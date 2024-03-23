@@ -1,5 +1,5 @@
 export enum StatusPedidoType {
-  "Em andamento",
-  "Finalizado",
-  "Cancelado",
+  "CANCELADO",
+  "EM ANDAMENTO",
+  "FINALIZADO"
 }

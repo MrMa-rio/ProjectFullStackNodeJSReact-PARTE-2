@@ -2,7 +2,7 @@ export interface PayloadToken {
   statusCode: number;
   nome: string;
   idCliente: number;
-  nivel_acesso: number;
+  nivelAcesso: number;
   email: string;
   iat: number;
   exp: number;

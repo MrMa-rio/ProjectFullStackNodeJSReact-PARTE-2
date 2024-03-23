@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ItemInOrder } from "../ItemInOrder/ItemInOrder";
 import { StatusPedidoType } from "@/typesObjects/StatusPedidoType";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateStatusPedido } from "@/api/orders/updateStatusPedido";
 import { useCalculateOrder } from "@/hooks/useCalculateOrder";
 
@@ -21,11 +21,11 @@ export const Order = ({
   const { data } = useItemsOrder(idPedido);
   const totalPedido = useCalculateOrder(idPedido)
   const useQuery = useQueryClient();
-  const [targetStatus, setTargetStatus] = useState(0);
+  const [targetStatus, setTargetStatus] = useState(3);
   const statusChange: string =
-    StatusPedidoType["Em andamento"] == statusPedido
+    StatusPedidoType["EM ANDAMENTO"] == statusPedido
       ? "bg-orange-400"
-      : StatusPedidoType["Finalizado"] == statusPedido
+      : StatusPedidoType["FINALIZADO"] == statusPedido
         ? "bg-green-400"
         : "bg-red-700";
   const changeStatusOrder = useMutation({
@@ -34,7 +34,7 @@ export const Order = ({
   });
 
   useEffect(() => {
-    if (targetStatus !== 0) {
+    if (targetStatus !== 3) {
       changeStatusOrder.mutate();
     }
   }, [targetStatus]);
@@ -83,19 +83,19 @@ export const Order = ({
       <footer className="p-2">
         <div
           className={`${
-            isShow && statusPedido === StatusPedidoType["Em andamento"]
+            isShow && statusPedido === StatusPedidoType["EM ANDAMENTO"]
               ? "flex"
               : "hidden"
           } justify-between  `}
         >
           <button
-            onClick={() => setTargetStatus(1)}
+            onClick={() => setTargetStatus(2)}
             className="flex items-center gap-2 bg-green-600 text-white text-sm lg:text-base p-1 lg:p-2 rounded-lg bg-opacity-70 hover:bg-opacity-100 active:scale-105 transition-all"
           >
             Pedido Entregue
           </button>
           <button
-            onClick={() => setTargetStatus(2)}
+            onClick={() => setTargetStatus(0)}
             className="text-red-600 hover:text-white hover:bg-red-600 text-sm lg:text-base p-1 lg:p-2 rounded-lg bg-opacity-70 hover:bg-opacity-100 active:scale-105 transition-all"
           >
             Cancelar Pedido

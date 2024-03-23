@@ -27,9 +27,9 @@ export default function page() {
             onChange={(e) => setStatusOrder(Number(e.currentTarget.value))}
           >
             <option value={3}>Todos</option>
-            <option value={0}>Em Andamento</option>
-            <option value={1}>Finalizado</option>
-            <option value={2}>Cancelado</option>
+            <option value={1}>Em Andamento</option>
+            <option value={2}>Finalizado</option>
+            <option value={0}>Cancelado</option>
           </select>
         </div>
         <div>

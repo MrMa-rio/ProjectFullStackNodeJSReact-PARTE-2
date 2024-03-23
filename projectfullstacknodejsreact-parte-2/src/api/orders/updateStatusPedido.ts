@@ -7,7 +7,7 @@ const url = process.env.NEXT_PUBLIC_API_PEDIDOS as string;
 export const updateStatusPedido = async (idPedido: number, statusPedido: number) => {
   try {
     const response = await fetch(url, {
-      method: "PATCH",
+      method: "PUT",
       headers: headers(),
       body: JSON.stringify({ idPedido: idPedido, statusPedido: statusPedido }),
       next: {
